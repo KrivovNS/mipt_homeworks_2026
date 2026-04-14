@@ -70,7 +70,6 @@ class CircuitBreaker:
 
         @wraps(func)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> Any:
-
             self._check_fall_time(func, state)
             return self._call_func(func, state, *args, **kwargs)
 
@@ -86,8 +85,9 @@ class CircuitBreaker:
             state.fall_time = None
             state.count_of_tryings = 0
 
-    def _call_func(self, func: CallableWithMeta[P, R_co], state: BreakerState,
-                   *args: P.args, **kwargs: P.kwargs) -> Any:
+    def _call_func(
+        self, func: CallableWithMeta[P, R_co], state: BreakerState, *args: P.args, **kwargs: P.kwargs
+    ) -> Any:
         try:
             res = func(*args, **kwargs)
         except self.triggers_on as e:
