@@ -65,7 +65,7 @@ class CircuitBreaker:
         self.time_to_recover: int = time_to_recover
         self.triggers_on: type[Exception] = triggers_on
 
-    def __call__(self, func: CallableWithMeta[P, R_co]) -> Callable[..., R_co]:
+    def __call__(self, func: CallableWithMeta[P, R_co]) -> Callable[P, R_co]:
         state = BreakerState()
 
         @wraps(func)
@@ -85,9 +85,7 @@ class CircuitBreaker:
             state.fall_time = None
             state.count_of_tryings = 0
 
-    def _call_func(
-        self, func: CallableWithMeta[P, R_co], state: BreakerState, *args: P.args, **kwargs: P.kwargs
-    ) -> Any:
+    def _call_func(self, func: CallableWithMeta[P, R_co], state: BreakerState, *args: Any, **kwargs: Any) -> Any:
         try:
             res = func(*args, **kwargs)
         except self.triggers_on as e:
