@@ -25,9 +25,9 @@ class CallableWithMeta(Protocol[P, R_co]):
 
 class BreakerError(Exception):
     def __init__(self, func_name: str, block_time: datetime, message: str):
+        super().__init__(message)
         self.func_name = func_name
         self.block_time = block_time
-        super().__init__(message)
 
 
 def is_positive_int(num: int) -> bool:
