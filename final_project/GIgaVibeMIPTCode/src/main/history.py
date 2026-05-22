@@ -31,7 +31,7 @@ class MessageHistory:
         if system_prompt is None:
             return messages
 
-        return [ChatMessage(role="system", content=system_prompt),*messages,]
+        return [ChatMessage(role='system', content=system_prompt),*messages,]
 
     def clear(self) -> None:
         self._history.clear()

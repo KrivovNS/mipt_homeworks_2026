@@ -12,7 +12,7 @@ def main() -> None:
         config = load_config()
 
     except ValueError as error:
-        print(f"Config error: {error}")
+        print(f'Config error: {error}')
         return
 
     llm_client = LLMClient(config)
@@ -21,7 +21,7 @@ def main() -> None:
     print_start_menu()
 
     while True:
-        user_input = input(">>> ").strip()
+        user_input = input('>>> ').strip()
 
         if not user_input:
             continue
@@ -30,7 +30,7 @@ def main() -> None:
 
         match command:
             case ConsoleCommand.EXIT:
-                print("Bye!")
+                print('Bye!')
                 break
 
             case ConsoleCommand.RESET:
@@ -47,7 +47,7 @@ def main() -> None:
 
                 history.add_message(
                     ChatMessage(
-                        role="user",
+                        role='user',
                         content=prepared_input,
                     )
                 )
@@ -58,16 +58,16 @@ def main() -> None:
                     answer = _print_streaming_answer(llm_client, messages)
 
                 except KeyboardInterrupt:
-                    print("\nRequest interrupted")
+                    print('\nRequest interrupted')
                     continue
 
                 except Exception as error:
-                    print(f"LLM error: {error}")
+                    print(f'LLM error: {error}')
                     continue
 
                 history.add_message(
                     ChatMessage(
-                        role="assistant",
+                        role='assistant',
                         content=answer,
                     )
                 )
@@ -82,14 +82,14 @@ def _print_streaming_answer(
     print()
 
     for part in llm_client.generate_stream(messages):
-        print(part, end="", flush=True)
+        print(part, end='', flush=True)
         answer_parts.append(part)
 
     print()
     print()
 
-    return "".join(answer_parts)
+    return ''.join(answer_parts)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

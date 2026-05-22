@@ -1,17 +1,16 @@
 from collections.abc import Iterator
+from typing import cast
 
 from openai import OpenAI
+from openai.types.chat import ChatCompletionChunk, ChatCompletionMessageParam
 
 from .config import AppConfig
 from .models import ChatMessage
 
 
-def convert_messages(messages: list[ChatMessage]) -> list[dict[str, str]]:
+def convert_messages(messages: list[ChatMessage]) -> list[ChatCompletionMessageParam]:
     return [
-        {
-            "role": message.role,
-            "content": message.content,
-        }
+        cast(ChatCompletionMessageParam, {'role': message.role, 'content': message.content})
         for message in messages
     ]
 
@@ -34,7 +33,7 @@ class LLMClient:
         content = completion.choices[0].message.content
 
         if content is None:
-            return ""
+            return ''
 
         return content
 
@@ -46,7 +45,7 @@ class LLMClient:
             stream=True,
         )
 
-        for chunk in stream:
+        for chunk in cast(Iterator[ChatCompletionChunk], stream):
             content = chunk.choices[0].delta.content
 
             if content is not None:
