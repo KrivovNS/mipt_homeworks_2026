@@ -4,6 +4,60 @@
 
 Проект поддерживает локальные OpenAI-совместимые модели (например, Ollama), хранение истории сообщений, обработку файлов и режим почанковой обработки больших текстов.
 
+## Быстрый старт
+
+### 1. Клонировать репозиторий
+
+### 2. Настроить конфигурацию
+
+Создать файл:
+
+```text
+resources/config.yaml
+```
+
+и заполнить его:
+
+```yaml
+api_key: ollama
+
+api_host: http://localhost:11434/v1/
+
+model: gemma3:270m
+
+limit_message: 20
+
+limit_characters: 4000
+
+temperature: 0.3
+
+system_prompt: |
+  You are a helpful assistant
+```
+
+При использовании локальных моделей через Ollama:
+
+Скачать модель:
+
+```bash
+ollama pull gemma3:270m
+```
+
+Запустить Ollama:
+
+```bash
+ollama serve
+```
+
+---
+
+### 3. Запустить приложение
+
+Из корневой папки проекта:
+
+```bash
+python -m src.main.main
+```
 ---
 
 ## Основной функционал
