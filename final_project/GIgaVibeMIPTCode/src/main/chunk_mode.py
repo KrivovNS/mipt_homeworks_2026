@@ -57,8 +57,10 @@ def run_file_chunk_mode(command_text: str, llm_client: LLMClient) -> None:
 
     print('Обработка файла завершена.')
 
+
 def normalize_path(raw_path: str) -> Path:
     return Path(raw_path.strip().strip('"').strip("'"))
+
 
 def _print_streaming_chunk_answer(llm_client: LLMClient, messages: list[ChatMessage]) -> None:
     print()
@@ -72,11 +74,11 @@ def _print_streaming_chunk_answer(llm_client: LLMClient, messages: list[ChatMess
 
 def make_chunks(command_text: str, text: str) -> list[str]:
     if 'len=' in command_text:
-        chunk_length = extract_positive_int(command_text,'len=', DEFAULT_CHUNK_LENGTH)
+        chunk_length = extract_positive_int(command_text, 'len=', DEFAULT_CHUNK_LENGTH)
 
         return split_by_length(text, chunk_length)
 
-    paragraph_count = extract_positive_int(command_text,'paragraph=', DEFAULT_PARAGRAPH_COUNT)
+    paragraph_count = extract_positive_int(command_text, 'paragraph=', DEFAULT_PARAGRAPH_COUNT)
 
     return split_by_paragraphs(text, paragraph_count)
 
@@ -94,9 +96,9 @@ def extract_positive_int(text: str, prefix: str, default: int) -> int:
 
 def split_by_length(text: str, chunk_length: int) -> list[str]:
     return [
-        text[index:index + chunk_length]
+        text[index : index + chunk_length]
         for index in range(0, len(text), chunk_length)
-        if text[index:index + chunk_length].strip()
+        if text[index : index + chunk_length].strip()
     ]
 
 
@@ -106,7 +108,7 @@ def split_by_paragraphs(text: str, paragraph_count: int) -> list[str]:
     chunks = []
 
     for index in range(0, len(paragraphs), paragraph_count):
-        chunk = '\n'.join(paragraphs[index:index + paragraph_count])
+        chunk = '\n'.join(paragraphs[index : index + paragraph_count])
         chunks.append(chunk)
 
     return chunks

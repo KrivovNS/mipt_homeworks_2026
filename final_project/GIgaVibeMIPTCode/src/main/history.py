@@ -25,13 +25,19 @@ class MessageHistory:
     def get_history(self) -> list[ChatMessage]:
         return list(self._history)
 
-    def get_history_with_system_prompt(self, system_prompt: str | None,) -> list[ChatMessage]:
+    def get_history_with_system_prompt(
+        self,
+        system_prompt: str | None,
+    ) -> list[ChatMessage]:
         messages = self.get_history()
 
         if system_prompt is None:
             return messages
 
-        return [ChatMessage(role='system', content=system_prompt),*messages,]
+        return [
+            ChatMessage(role='system', content=system_prompt),
+            *messages,
+        ]
 
     def clear(self) -> None:
         self._history.clear()
@@ -63,5 +69,5 @@ class MessageHistory:
             return
 
         message = self._history[0]
-        message.content = message.content[-self._config.limit_characters:]
+        message.content = message.content[-self._config.limit_characters :]
         self._char_count = len(message.content)

@@ -8,7 +8,19 @@
 
 ### 1. Клонировать репозиторий
 
-### 2. Настроить конфигурацию
+### 2. Установить зависимости
+
+```bash
+python -m pip install openai
+python -m pip install pyyaml
+python -m pip install types-pyyaml
+python -m pip install pytest
+python -m pip install pytest-cov
+python -m pip install mypy
+python -m pip install ruff
+```
+
+### 3. Настроить конфигурацию
 
 Создать файл:
 
@@ -51,7 +63,7 @@ ollama serve
 
 ---
 
-### 3. Запустить приложение
+### 4. Запустить приложение
 
 Из корневой папки проекта:
 
@@ -91,6 +103,7 @@ python -m src.main.main
 
 ```text
 В чем ошибка в коде? @::Main.java::
+```
 
 ## Команда `/file_chunk`
 
